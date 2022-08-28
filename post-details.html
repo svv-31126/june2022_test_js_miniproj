@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/style.css"/>
+    <title>Post Details</title>
+</head>
+<body>
+<div class="container">
+    <div class="postDetails">
+        <div id="user"></div>
+        <div id="post"></div>
+        <div id="title"></div>
+        <br>
+        <div id="text"></div>
+    </div>
+    <div class="commHeader"><span><strong>Comments:</strong></span></div>
+    <div class="comments" id="divComment"></div>
+</div>
+<script>
+    let url = new URL(location.href);
+    let userId = url.searchParams.get('id');
+    let postId = url.searchParams.get('postId');
+
+    let d1 = document.getElementById('user');
+    d1.innerHTML = `<span><strong>User Id:</strong> ${userId}</span>`;
+
+    const divComment = document.getElementById('divComment');
+
+    fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`)
+        .then((response) => response.json())
+        .then(post => {
+            let d2 = document.getElementById('post');
+            d2.innerHTML = `<span><strong>Post Id:</strong> ${post.id}</span>`;
+            let d3 = document.getElementById('title');
+            d3.innerHTML = `<span><strong>Title:</strong> ${post.title}</span>`;
+            let d4 = document.getElementById('text');
+            d4.innerHTML = `<span> ${post.body}</span>`;
+        })
+
+    fetch(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`)
+        .then((response) => response.json())
+        .then(comments => {
+            for (let comment of comments) {
+                let divCommentInner = document.createElement('div');
+                divCommentInner.classList.add('coItem');
+                divComment.appendChild(divCommentInner);
+
+                let divEmail = document.createElement('div');
+                divEmail.classList.add('coItem');
+                divEmail.innerHTML = `<span><strong>User:</strong>${comment.email}</span>`;
+                divCommentInner.appendChild(divEmail);
+
+                let divName = document.createElement('div');
+                divName.classList.add('coItem');
+                divName.innerHTML = `<strong>${comment.name}</strong>`;
+                divCommentInner.appendChild(divName);
+
+                let divBody = document.createElement('div');
+                divBody.classList.add('coItem');
+                divBody.innerHTML = `<br><span>${comment.body}</span>`;
+                divCommentInner.appendChild(divBody);
+
+
+            }
+        })
+</script>
+</body>
+</html>

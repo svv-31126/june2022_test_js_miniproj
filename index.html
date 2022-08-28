@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Users</title>
+    <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+<script>
+    const divBase = document.createElement('div');
+    divBase.classList.add('base');
+    document.body.appendChild(divBase);
+
+    fetch('https://jsonplaceholder.typicode.com/users')
+        .then((response) => response.json())
+        .then(users => {
+            for (let user of users) {
+                let divUser = document.createElement('div');
+                divUser.classList.add('data');
+                divBase.appendChild(divUser);
+
+                let h3 = document.createElement('h3');
+                h3.innerText = `${user.id} -- ${user.name}`;
+                divUser.appendChild(h3);
+
+                let btnUser = document.createElement('button');
+                btnUser.innerText = 'Details';
+                btnUser.classList.add('button');
+                btnUser.onclick = function () {
+                    location.href = `user-details.html?id=${user.id}`;
+                }
+                divUser.appendChild(btnUser);
+
+            }
+        });
+</script>
+</body>
+</html>
