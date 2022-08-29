@@ -13,6 +13,7 @@
     <div class="postDetails">
         <div id="user"></div>
         <div id="post"></div>
+        <br>
         <div id="title"></div>
         <br>
         <div id="text"></div>
@@ -36,7 +37,7 @@
             let d2 = document.getElementById('post');
             d2.innerHTML = `<span><strong>Post Id:</strong> ${post.id}</span>`;
             let d3 = document.getElementById('title');
-            d3.innerHTML = `<span><strong>Title:</strong> ${post.title}</span>`;
+            d3.innerHTML = `<strong>${post.title}</strong>`;
             let d4 = document.getElementById('text');
             d4.innerHTML = `<span> ${post.body}</span>`;
         })
